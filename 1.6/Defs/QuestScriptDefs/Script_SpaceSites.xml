@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <QuestScriptDef>
+    <defName>OpportunitySite_Asteroid_AsteroidMineralScanner</defName>
+    <randomlySelectable>false</randomlySelectable>
+    <isRootSpecial>true</isRootSpecial>
+    <autoAccept>true</autoAccept>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->[targetMineableThingAsteroidScanner_label] rich Asteroid</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->The location of a small asteroid orbiting the planet in orbit has been found. It contains significant amounts of [targetMineableThingAsteroidScanner_label] encased in vacstone.\n\nYou do not detect any signs of life.\n\nYou can reach the small asteroid with transport pods, shuttles, or a gravship. Equip your colonists with sufficient orbital apparel before departing. Its orbit will decay and break up into meteorites over the planet in 30 days if we don't take it for ourselves.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+    <questDescriptionAndNameRules>
+      <rulesStrings>
+      </rulesStrings>
+    </questDescriptionAndNameRules>
+    <canOccurOnAllPlanetLayers>true</canOccurOnAllPlanetLayers>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="QuestNode_IsSet">
+          <name>discoveryMethod</name>
+          <elseNode Class="QuestNode_RandomNode">
+            <nodes>
+              <li Class="QuestNode_Set">
+                <name>discoveryMethod</name>
+                <value>You have discovered</value>
+              </li>
+            </nodes>
+          </elseNode>
+        </li>
+
+        <li Class="AsteroidMineralScanner.QuestNode_Root_Asteroid_AsteroidMineralScanner">
+          <layerDef>Orbit</layerDef>
+          <worldObjectDef>AsteroidMiningSite_AsteroidMineralScanner</worldObjectDef>
+        </li>
+      </nodes>
+    </root>
+  </QuestScriptDef>
+
+</Defs>

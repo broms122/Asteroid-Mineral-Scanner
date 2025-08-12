@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>  
+
+
+  <MapGeneratorDef ParentName="SpaceMapGenerator">
+    <defName>Asteroid_AsteroidMineralScanner</defName>
+    <label>rich asteroid</label>
+    <genSteps>
+      <li>Asteroid_AsteroidMineralScanner</li>
+      <!--<li>AsteroidBasicTransportPods</li>
+      <li>MechShipChunk_Asteroid</li>
+      <li>RockChunks</li>-->
+    </genSteps>
+  </MapGeneratorDef>
+
+  <GenStepDef>
+    <defName>Asteroid_AsteroidMineralScanner</defName>
+    <order>200</order>
+    <genStep Class="AsteroidMineralScanner.GenStep_Asteroid_AsteroidMineralScanner">
+      <numChunks>0</numChunks>
+      <!--
+        <mineableCounts>
+          <MineableGold>20~30</MineableGold>
+          <MineableSilver>20~30</MineableSilver>
+          <MineableSteel>20~30</MineableSteel>
+          <MineableUranium>20~30</MineableUranium>
+          <MineablePlasteel>20~30</MineablePlasteel>
+          <MineableComponentsIndustrial>20~30</MineableComponentsIndustrial>
+          <MineableJade>20~30</MineableJade>
+        </mineableCounts>-->
+    </genStep>
+  </GenStepDef>
+
+</Defs>

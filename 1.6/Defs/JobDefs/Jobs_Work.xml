@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+
+
+  <JobDef>
+    <defName>OperateScanner_AsteroidMineralScanner</defName>
+    <driverClass>JobDriver_OperateScanner</driverClass>
+    <reportString>scanning at TargetA.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+
+
+</Defs>

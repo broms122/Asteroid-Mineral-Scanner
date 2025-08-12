@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Asteroid Mineral Scanner</name>
+	<author>Broms</author>
+	<packageId>Broms.AsteroidMineralScanner</packageId>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>Ludeon.RimWorld.Odyssey</packageId>
+      <displayName>Odyssey</displayName>
+    </li>
+  </modDependencies>
+	<description>This adds a Asteroid Mineral Scanner building that allows you to search for rich asteroids in a specific resource in orbit as an alternative to the vanilla long-range mineral scanner on the surface. You may find slightly more resources in comparison in addition to small amounts of vacstone for the additional fuel and labor effort of going to orbit.
+	</description>
+  <loadAfter>
+    <li>Ludeon.RimWorld.Odyssey</li>
+    <li>guy762.mm.kotorcore</li>
+  </loadAfter>
+</ModMetaData>

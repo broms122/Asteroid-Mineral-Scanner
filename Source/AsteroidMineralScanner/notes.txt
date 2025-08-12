@@ -1,0 +1,11 @@
+﻿
+using RimWorld;
+using Verse;
+
+foreach (ThingDef thingdef in DefDatabase<ThingDef>.AllDefsListForReading)
+{
+    if (thingdef.IsStuff && !thingdef.thingCategories.Contains(ThingCategoryDefOf.StoneBlocks) && (thingdef.IsMetal || thingdef.stuffProps.categories.Contains(StuffCategoryDefOf.Stony)))
+    {
+        undergroundNodeDefThingsList.Add(thingdef);
+    }
+}

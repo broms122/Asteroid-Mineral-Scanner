@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>AsteroidMineralScanner</defName>
+    <label>asteroid mineral scanner</label>
+    <description>A lateral sensor unit used by researchers to detect a specific type of mineral in orbiting asteroids. The chance to find a resource depends on the operator's research ability. This sensor can be tuned to target a specific resource type. It consumes a lot of electricity. If you find a resource, you'll need to travel to collect it.</description>
+    <graphicData>
+      <texPath>Things/Building/Misc/AsteroidMineralScanner</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3, 3)</drawSize>
+      <shadowData>
+        <volume>(1.4, 0.4, 1.4)</volume>
+        <offset>(0,0,-0.1)</offset>
+      </shadowData>
+    </graphicData>
+    <costList>
+      <Steel>200</Steel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Big</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>700</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="AsteroidMineralScanner.CompProperties_AsteroidMineralScanner">
+        <scanSpeedStat>ResearchSpeed</scanSpeedStat>
+        <scanFindMtbDays>4</scanFindMtbDays>
+        <scanFindGuaranteedDays>8</scanFindGuaranteedDays>
+        <soundWorking>ScannerLongRangeMineral_Ambience</soundWorking>
+      </li>
+    </comps>
+    <placeWorkers>
+      <!--<li>PlaceWorker_NotUnderRoof</li>-->
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <altitudeLayer>Building</altitudeLayer>
+    <canBeUsedUnderRoof>false</canBeUsedUnderRoof>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>10000</WorkToBuild>
+      <Flammability>0.5</Flammability>
+      <Beauty>-8</Beauty>
+    </statBases>
+    <fillPercent>0.40</fillPercent>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <designationCategory>Odyssey</designationCategory>
+    <rotatable>true</rotatable>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,2)</interactionCellOffset>
+    <interactionCellIcon>DiningChair</interactionCellIcon>
+    <interactionCellIconReverse>true</interactionCellIconReverse>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <canOverlapZones>false</canOverlapZones>
+    <size>(3, 3)</size>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>LongRangeMineralScanner</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+
+
+</Defs>

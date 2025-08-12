@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+ 
+
+  <WorldObjectDef ParentName="ClaimableSpace">
+    <defName>AsteroidMiningSite_AsteroidMineralScanner</defName>
+    <worldObjectClass>ResourceAsteroidMapParent</worldObjectClass>
+    <label>asteroid mining site</label> <!-- hidden -->
+    <description>A vacstone asteroid that was towed into orbit around the planet as part of a mining operation long ago. This asteroid has not yet been mined.\n\nThis location can be reached using transport pods, shuttles, or a gravship.</description>
+    <expandingIconTexture>World/WorldObjects/Expanding/ResourceAsteroid</expandingIconTexture>
+    <expandingIconMaskTexture>World/WorldObjects/Expanding/ResourceAsteroid_m</expandingIconMaskTexture>
+    <expandingShader>CutoutComplexUI</expandingShader>
+    <overrideMapSize>(250,1,250)</overrideMapSize>
+    <mapGenerator>Asteroid_AsteroidMineralScanner</mapGenerator>
+  </WorldObjectDef>
+
+
+</Defs>

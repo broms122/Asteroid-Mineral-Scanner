@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+
+  <scanFindMtbDays>Maximum time between finding something</scanFindMtbDays>
+  <scanFindGuaranteedDays>Maximum days to find something</scanFindGuaranteedDays>
+  <canBeUsedUnderRoof>Asteroid Mineral Scanner usable under roof</canBeUsedUnderRoof>
+
+</LanguageData>
