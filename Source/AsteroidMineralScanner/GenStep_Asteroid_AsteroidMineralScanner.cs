@@ -8,12 +8,16 @@ using RimWorld.QuestGen;
 using RimWorld.SketchGen;
 using UnityEngine;
 using Verse;
-using Verse.Noise;
+using System;
+using AsteroidMineralScanner.Properties;
 
 namespace AsteroidMineralScanner
 {
     public class GenStep_Asteroid_AsteroidMineralScanner : GenStep
     {
+        public override int SeedPart => 1929282;
+        public ThingDef targetThingDef;
+
         /*
         public class MineableCountConfig
         {
@@ -28,30 +32,44 @@ namespace AsteroidMineralScanner
             }
         }*/
 
-        public IntRange countRange = new IntRange(20, 30);
-        public ThingDef targetThingDef;
+        //public IntRange countRange = new IntRange(20, 30);
+
+        // A = pi*r^2
+        // r = sqrt(A)/sqrt(pi)
+
+        public int asteroidOreCount => AMSMod.settings.asteroidOreCount; // desired ore area
+        public float oreRadius => Math.Min((float)(Math.Sqrt((double)asteroidOreCount)/Math.Sqrt(Math.PI) + 3),41);
+        public float floorRadius => Math.Min(oreRadius + 15, 56);
+        //public float floorRadius => (float)((Math.Sqrt((double)asteroidOreCount) / Math.Sqrt(Math.PI)) + 15);
+        public int asteroidFloorCount => (int)(Math.PI* floorRadius* floorRadius); // desired floor area
+
+
+
+
 
         //public static List<MineableCountConfig> mineableCounts;
-
-        public IntRange numChunks;
-
-        private ModuleBase innerNoise;
-
-        public override int SeedPart => 1929282;
-
-        protected virtual float Radius => 0.06f; // 0.224f base .. 0.04 is too big 0.02 seems ok.. was 0.06 for a long time
+        //private ModuleBase innerNoise;
+        //protected virtual float Radius => 0.06f; // 0.224f base .. 0.04 is too big 0.02 seems ok.. was 0.06 for a long time
 
         public override void Generate(Map map, GenStepParams parms)
         {
             if (ModLister.CheckOdyssey("Asteroid"))
             {
-                GenerateAsteroidElevation(map, parms);
-                //GenerateCaveElevation(map, parms);
+                //GenerateAsteroidElevation(map, parms);
+                Log.Message($"asteroidOreCount = {asteroidOreCount}");
+                Log.Message($"oreRadius = {oreRadius}");
+                Log.Message($"floorRadius = {floorRadius}");
+                Log.Message($"asteroidFloorCount = {asteroidFloorCount}");
+                Log.Message($"map.Size = {map.Size}");
+                Log.Message($"asteroidFloorCount = {asteroidFloorCount}");
+
+
 
                 SpawnAsteroid(map, parms);
                 //SpawnOres(map, parms);
                 map.OrbitalDebris = OrbitalDebrisDefOf.Asteroid;
             }
+
         }
 
         private void SpawnAsteroid(Map map, GenStepParams parms)
@@ -59,51 +77,56 @@ namespace AsteroidMineralScanner
             //targetThingDef = ((SpaceMapParent)map.ParentHolder).preciousResource;
             targetThingDef = Current.Game.GetComponent<AsteroidScannerGameComponent>().targetThingDef;
 
+            IntVec3 mapCenter = map.Center;
+
             using (map.pathing.DisableIncrementalScope())
             {
-                foreach (IntVec3 allCell in map.AllCells)
+                /*
+                var intVec3List = GridShapeMaker.IrregularLump(mapCenter, map, asteroidFloorCount);
+
+                foreach (IntVec3 cell in intVec3List)
                 {
-                    float num = MapGenerator.Elevation[allCell];
-                    float num2 = MapGenerator.Caves[allCell];
-                    //Log.Message($"test debug error log for num = {num}");
-                    //Log.Message($"test debug error log for num2 = {num2}");
+                    map.terrainGrid.SetTerrain(cell, ThingDefOf.Vacstone.building.naturalTerrain);
+                }*/
 
-                    if (num > 0.5) // was 0.5f
+                int generatedFloor = 0;
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(mapCenter, floorRadius, true))
+                {
+                    if (generatedFloor < asteroidFloorCount)
                     {
-                        map.terrainGrid.SetTerrain(allCell, ThingDefOf.Vacstone.building.naturalTerrain);
+                        map.terrainGrid.SetTerrain(cell, ThingDefOf.Vacstone.building.naturalTerrain);
+                        generatedFloor++;
                     }
-
-                    /*
-                    if (num > 0.85f && num2 == 0f) // was 0.7f  .. 0.9 was alright so was .87
-                    {
-                        GenSpawn.Spawn(ThingDefOf.Vacstone, allCell, map);
-                        //ThingDef thingDef = ((SpaceMapParent)map.ParentHolder).preciousResource ?? mineableCounts.RandomElement().mineable;
-                        //GenSpawn.Spawn(thingDef, allCell, map);
-                    }*/
-
-                    /*
-                    if (num > 0.7f)
-                    {
-                        map.roofGrid.SetRoof(allCell, RoofDefOf.RoofRockThin);
-                    }*/
                 }
 
+                /*              foreach (IntVec3 allCell in map.AllCells)
+                                {
+                                    float num = MapGenerator.Elevation[allCell];
+
+                                    if (num > 0.5) // was 0.5f
+                                    {
+                                        map.terrainGrid.SetTerrain(allCell, ThingDefOf.Vacstone.building.naturalTerrain);
+                                    }
+
+
+                                }*/
+
                 List<IntVec3> cellsInCircle = new List<IntVec3>();
-                IntVec3 mapCenter = map.Center;
-                float radius = 5f;
-                int forcedLumpSize = countRange.RandomInRange;
+                //int forcedLumpSize = countRange.RandomInRange;
                 int generatedOre = 0;
 
-                foreach (IntVec3 cell in GenRadial.RadialCellsAround(mapCenter, radius, true))
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(mapCenter, oreRadius, true))
                 {   
-                    if (generatedOre < forcedLumpSize)
+                    if (generatedOre < asteroidOreCount)
                     {
                         GenSpawn.Spawn(targetThingDef, cell, map);
                         generatedOre++;
+                        //Log.Message($"Spawning Ore # {generatedOre}\t thing = {targetThingDef}");
                     }
                     else
                     {
                         GenSpawn.Spawn(ThingDefOf.Vacstone, cell, map);
+                        //Log.Message($"Spawning Vacstone");
                     }
                 }
 
@@ -132,7 +155,7 @@ namespace AsteroidMineralScanner
             }
         }
 
-        private void GenerateAsteroidElevation(Map map, GenStepParams parms)
+/*        private void GenerateAsteroidElevation(Map map, GenStepParams parms)
         {
             innerNoise = ConfigureNoise(map, parms);
             foreach (IntVec3 allCell in map.AllCells)
@@ -156,7 +179,7 @@ namespace AsteroidMineralScanner
             NoiseDebugUI.StoreNoiseRender(input, "Asteroid");
             return input;
         }
-
+*/
 /*        private void SpawnOres(Map map, GenStepParams parms)
         {
 

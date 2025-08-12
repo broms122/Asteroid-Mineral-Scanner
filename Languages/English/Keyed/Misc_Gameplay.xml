@@ -5,5 +5,6 @@
   <scanFindMtbDays>Maximum time between finding something</scanFindMtbDays>
   <scanFindGuaranteedDays>Maximum days to find something</scanFindGuaranteedDays>
   <canBeUsedUnderRoof>Asteroid Mineral Scanner usable under roof</canBeUsedUnderRoof>
+  <asteroidOreCount>Number of mineable resource tiles per asteroid</asteroidOreCount>
 
 </LanguageData>

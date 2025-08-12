@@ -1,15 +1,6 @@
 ﻿using RimWorld;
-using System;
-using System.Linq;
 using UnityEngine;
 using Verse;
-using System.Runtime;
-using Verse.Noise;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using AsteroidMineralScanner.Properties;
-using static Verse.ArenaUtility.ArenaResult;
 
 namespace AsteroidMineralScanner
 {
@@ -65,6 +56,7 @@ namespace AsteroidMineralScanner
 
             var buffer1 = settings.scanFindMtbDays.ToString();
             var buffer2 = settings.scanFindGuaranteedDays.ToString();
+            var buffer3 = settings.asteroidOreCount.ToString();
 
 
             settings.scanFindMtbDays = (int)listingStandard.SliderLabeled("scanFindMtbDays".Translate() + ": " + settings.scanFindMtbDays, settings.scanFindMtbDays, 0, 20);
@@ -78,7 +70,10 @@ namespace AsteroidMineralScanner
             //settings.canBeUsedUnderRoof = 
             //listingStandard.CheckboxLabeled("BromsAMS_canBeUsedUnderRoof".Translate(), ref settings.canBeUsedUnderRoof);
             listingStandard.CheckboxLabeled("canBeUsedUnderRoof".Translate(), ref settings.canBeUsedUnderRoof, 0);
-            
+            listingStandard.Gap(24f);
+
+            settings.asteroidOreCount = (int)listingStandard.SliderLabeled("asteroidOreCount".Translate() + ": " + settings.asteroidOreCount, settings.asteroidOreCount, 1, 5000    );
+            listingStandard.TextFieldNumericLabeled("", ref settings.asteroidOreCount, ref buffer3);
             listingStandard.Gap(24f);
 
 
@@ -111,6 +106,7 @@ namespace AsteroidMineralScanner
             settings.scanFindMtbDays = AMSModSettings.scanFindMtbDays_default;
             settings.scanFindGuaranteedDays = AMSModSettings.scanFindGuaranteedDays_default;
             settings.canBeUsedUnderRoof = AMSModSettings.canBeUsedUnderRoof_default;
+            settings.asteroidOreCount = AMSModSettings.asteroidOreCount_default;
         }
 
         public static void ApplySettingsNow()
@@ -150,10 +146,12 @@ namespace AsteroidMineralScanner
         public int scanFindMtbDays = scanFindMtbDays_default;
         public int scanFindGuaranteedDays = scanFindGuaranteedDays_default;
         public bool canBeUsedUnderRoof = canBeUsedUnderRoof_default;
+        public int asteroidOreCount = asteroidOreCount_default;
 
         public const int scanFindMtbDays_default = 4;
         public const int scanFindGuaranteedDays_default = 8;
         public const bool canBeUsedUnderRoof_default = true;
+        public const int asteroidOreCount_default = 25;
 
         public override void ExposeData()
         {
@@ -161,7 +159,8 @@ namespace AsteroidMineralScanner
             base.ExposeData();
             Scribe_Values.Look(ref scanFindMtbDays, "scanFindMtbDays", scanFindMtbDays_default);
             Scribe_Values.Look(ref scanFindGuaranteedDays, "scanFindGuaranteedDays", scanFindGuaranteedDays_default); 
-            Scribe_Values.Look(ref canBeUsedUnderRoof, "canBeUsedUnderRoof", canBeUsedUnderRoof_default); 
+            Scribe_Values.Look(ref canBeUsedUnderRoof, "canBeUsedUnderRoof", canBeUsedUnderRoof_default);
+            Scribe_Values.Look(ref asteroidOreCount, "asteroidOreCount", asteroidOreCount_default);
         }
 
     }
