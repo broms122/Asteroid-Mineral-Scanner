@@ -9,9 +9,9 @@ namespace AsteroidMineralScanner
 {
     public class CompAsteroidMineralScanner : CompScanner
     {
-        public ThingDef targetMineableAsteroidScanner;
+        private ThingDef targetMineableAsteroidScanner;
         //public static ThingDef targetMineableThingAsteroidScanner => targetMineableAsteroidScanner.building.mineableThing; //Gold
-        public static List<ThingDef> ResourceLumpNodeDefThingsList = new List<ThingDef>();
+        private List<ThingDef> ResourceLumpNodeDefThingsList = new List<ThingDef>();
         public override AcceptanceReport CanUseNow
         {
             get
