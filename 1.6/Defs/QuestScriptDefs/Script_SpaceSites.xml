@@ -8,12 +8,12 @@
     <autoAccept>true</autoAccept>
     <questNameRules>
       <rulesStrings>
-        <li>questName->[targetMineableThingAsteroidScanner_label] rich Asteroid</li>
+        <li>questName->[targetMineableThingDef_label] rich Asteroid</li>
       </rulesStrings>
     </questNameRules>
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->The location of a small asteroid orbiting the planet in orbit has been found. It contains significant amounts of [targetMineableThingAsteroidScanner_label] encased in vacstone.\n\nYou do not detect any signs of life.\n\nYou can reach the small asteroid with transport pods, shuttles, or a gravship. Equip your colonists with sufficient orbital apparel before departing. Its orbit will decay and break up into meteorites over the planet in 30 days if we don't take it for ourselves.</li>
+        <li>questDescription->The location of a small asteroid orbiting the planet in orbit has been found. It contains significant amounts of [targetMineableThingDef_label] encased in vacstone.\n\nYou do not detect any signs of life.\n\nYou can reach the small asteroid with transport pods, shuttles, or a gravship. Equip your colonists with sufficient orbital apparel before departing. Its orbit will decay and break up into meteorites over the planet in 30 days if we don't take it for ourselves.</li>
       </rulesStrings>
     </questDescriptionRules>
     <questDescriptionAndNameRules>

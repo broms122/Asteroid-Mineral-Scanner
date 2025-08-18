@@ -11,7 +11,8 @@ namespace AsteroidMineralScanner
 {
     public class AsteroidScannerGameComponent : GameComponent
     {
-        public ThingDef targetThingDef;
+        
+        //public ThingDef targetThingDef;
 
         public AsteroidScannerGameComponent(Game game)
         {
@@ -20,7 +21,7 @@ namespace AsteroidMineralScanner
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Defs.Look(ref targetThingDef, "targetThingDef");
+            //Scribe_Defs.Look(ref targetThingDef, "targetThingDef");
         }
     }
 }

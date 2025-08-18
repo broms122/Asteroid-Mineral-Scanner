@@ -9,9 +9,9 @@ namespace AsteroidMineralScanner
 {
     public class CompAsteroidMineralScanner : CompScanner
     {
-        private ThingDef targetMineableAsteroidScanner;
-        //public static ThingDef targetMineableThingAsteroidScanner => targetMineableAsteroidScanner.building.mineableThing; //Gold
-        private List<ThingDef> ResourceLumpNodeDefThingsList = new List<ThingDef>();
+        public ThingDef targetMineableBlock;
+        //public static ThingDef targetMineableThingDef => targetMineableBlock.building.mineableThing; //Gold
+        public List<ThingDef> ResourceLumpNodeDefThingsList = new List<ThingDef>();
         public override AcceptanceReport CanUseNow
         {
             get
@@ -45,41 +45,33 @@ namespace AsteroidMineralScanner
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Defs.Look(ref targetMineableAsteroidScanner, "targetMineableAsteroidScanner");
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && targetMineableAsteroidScanner == null)
+            Scribe_Defs.Look(ref targetMineableBlock, "targetMineableBlock");
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && targetMineableBlock == null)
             {
                 SetDefaultTargetMineral();
             }
 
-            Current.Game.GetComponent<AsteroidScannerGameComponent>().targetThingDef = targetMineableAsteroidScanner;
-            //Log.Message($"targetMineableAsteroidScanner = {targetMineableAsteroidScanner}");
+            //Current.Game.GetComponent<AsteroidScannerGameComponent>().targetThingDef = targetMineableBlock;
+            //Log.Message($"targetMineableBlock = {targetMineableBlock}");
 
         }
 
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
-            //GetUndegroundNodeDefThings();
             SetDefaultTargetMineral();
         }
 
         private void SetDefaultTargetMineral()
         {
-            targetMineableAsteroidScanner = ThingDefOf.MineableGold;
+            targetMineableBlock = ThingDefOf.MineableGold;
         }
 
         public void GetUndegroundNodeDefThings()
         {
-            //foreach (ThingDef thingdef in DefDatabase<ThingDef>.AllDefsListForReading.FindAll((ThingDef t) => t.deepCommonality != 0f || t.defName == "Obsidian"))
             foreach (ThingDef thingdef in DefDatabase<ThingDef>.AllDefsListForReading.FindAll((ThingDef t) => t.thingClass == typeof(Mineable) && t.building.veinMineable && t.building.mineableThing != null))
-            //foreach (ThingDef thingdef in DefDatabase<ThingDef>.AllDefsListForReading.FindAll((ThingDef t) => t.thingClass == typeof(Mineable)))
                 {
-                //thingdef.building.mineableThing != null
-                //if (typeof(Mineable).IsAssignableFrom(thingdef.thingClass) && thingdef.building.veinMineable)
-                //{
-                //Log.Message($"thingdef - {thingdef}\t t.thingClass - {thingdef.thingClass}\t t.mineableThing - {thingdef.building.mineableThing}");
                     ResourceLumpNodeDefThingsList.Add(thingdef);
-                //}
             }
         }
 
@@ -87,11 +79,11 @@ namespace AsteroidMineralScanner
         {
             Slate slate = new Slate();
             slate.Set("map", parent.Map);
-            slate.Set("targetMineableAsteroidScanner", targetMineableAsteroidScanner);
-            slate.Set("targetMineableThingAsteroidScanner", targetMineableAsteroidScanner.building.mineableThing);
+            slate.Set("targetMineableBlock", targetMineableBlock);
+            slate.Set("targetMineableThingDef", targetMineableBlock.building.mineableThing);
             slate.Set("worker", worker);
 
-                Current.Game.GetComponent<AsteroidScannerGameComponent>().targetThingDef = targetMineableAsteroidScanner;
+                //Current.Game.GetComponent<AsteroidScannerGameComponent>().targetThingDef = targetMineableBlock;
                 Quest quest = QuestUtility.GenerateQuestAndMakeAvailable(QuestScriptDefOf.OpportunitySite_Asteroid_AsteroidMineralScanner, slate);
                 Find.LetterStack.ReceiveLetter(quest.name, quest.description, LetterDefOf.PositiveEvent, null, null, quest);
 
@@ -107,7 +99,7 @@ namespace AsteroidMineralScanner
             {
                 yield break;
             }
-            ThingDef mineableThing = targetMineableAsteroidScanner.building.mineableThing;
+            ThingDef mineableThing = targetMineableBlock.building.mineableThing;
             Command_Action command_Action = new Command_Action();
             command_Action.defaultLabel = "CommandSelectMineralToScanFor".Translate() + ": " + mineableThing.LabelCap;
             command_Action.defaultDesc = "CommandSelectMineralToScanForDesc".Translate();
@@ -143,7 +135,7 @@ namespace AsteroidMineralScanner
                         {
                             if (selectedObject is Thing thing)
                             {
-                                    targetMineableAsteroidScanner = localD;
+                                    targetMineableBlock = localD;
                                     //Current.Game.GetComponent<AsteroidScannerGameComponent>().targetThingDef = localD;
                             }
                         }

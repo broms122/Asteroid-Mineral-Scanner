@@ -20,13 +20,8 @@ namespace AsteroidMineralScanner
 
 
         //public List<ThingDef> mineables;
-        public ThingDef targetMineableAsteroidScanner; // MineableGold
-        public ThingDef targetMineableThingAsteroidScanner; //Gold
-
-
-        private const int MaxDistanceFromColony = 3;
-
-        private const int MinDistanceFromColony = 1;
+        public ThingDef targetMineableBlock; // MineableGold
+        public ThingDef targetMineableThingDef; //Gold
 
         private static readonly int TimeoutDays = 30;
 
@@ -43,14 +38,14 @@ namespace AsteroidMineralScanner
                 Quest quest = QuestGen.quest;
                 Slate slate = QuestGen.slate;
                 TryFindSiteTile(slate, out var tile);
-                //slate.Set("targetMineableAsteroidScanner", targetMineableAsteroidScanner);
+                //slate.Set("targetMineableBlock", targetMineableBlock);
                 SpaceMapParent spaceMapParent = (SpaceMapParent)WorldObjectMaker.MakeWorldObject(worldObjectDef);
                 spaceMapParent.Tile = tile;
 
-                //ThingDef thingDef = targetMineableAsteroidScanner;
-                slate.Set("resource", targetMineableThingAsteroidScanner.label);
-                    spaceMapParent.nameInt = "AsteroidName".Translate(targetMineableThingAsteroidScanner.label.Named("RESOURCE"));
-                    spaceMapParent.preciousResource = targetMineableAsteroidScanner;
+                //ThingDef thingDef = targetMineableBlock;
+                slate.Set("resource", targetMineableThingDef.label);
+                spaceMapParent.nameInt = "AsteroidName".Translate(targetMineableThingDef.label.Named("RESOURCE"));
+                spaceMapParent.preciousResource = targetMineableBlock;
 
                 slate.Set("worldObject", spaceMapParent);
                 quest.SpawnWorldObject(spaceMapParent);
@@ -68,8 +63,8 @@ namespace AsteroidMineralScanner
         private bool TryFindSiteTile(Slate slate, out PlanetTile tile)
         {
             tile = PlanetTile.Invalid;
-            targetMineableAsteroidScanner = slate.Get<ThingDef>("targetMineableAsteroidScanner");
-            targetMineableThingAsteroidScanner = slate.Get<ThingDef>("targetMineableThingAsteroidScanner");
+            targetMineableBlock = slate.Get<ThingDef>("targetMineableBlock");
+            targetMineableThingDef = slate.Get<ThingDef>("targetMineableThingDef");
 
 
 
